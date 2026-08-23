@@ -12,20 +12,7 @@
 	<artifactId>sotd</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
-	<description/>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+
 	<properties>
 		<java.version>25</java.version>
 		<spring-cloud.version>2025.1.2</spring-cloud.version>
@@ -137,6 +124,54 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.3.1</version>
+
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>10.9.1</version>
+					</dependency>
+
+					<dependency>
+						<groupId>io.spring.javaformat</groupId>
+						<artifactId>spring-javaformat-checkstyle</artifactId>
+						<version>0.0.39</version>
+						<scope>runtime</scope>
+					</dependency>
+
+				</dependencies>
+				<configuration>
+					<configLocation>/src/main/resources/checkstyle/checkstyle.xml</configLocation>
+					<consoleOutput>true</consoleOutput>
+					<failOnViolation>true</failOnViolation>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>checkstyle-validation</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>validate</phase>
+						<inherited>true</inherited>
+						<configuration>
+							<configLocation>
+								${project.basedir}/src/main/resources/checkstyle/checkstyle.xml
+							</configLocation>
+							<includeTestSourceDirectory>true</includeTestSourceDirectory>
+							<suppressionsLocation>
+								${project.basedir}/src/main/resources/checkstyle/suppressions.xml
+							</suppressionsLocation>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
