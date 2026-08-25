@@ -1,0 +1,13 @@
+package com.maison.mabs.sotd.domain.model;
+
+import com.maison.mabs.sotd.infrastructure.adapter.in.dto.user.request.FragranceCollection;
+import lombok.Builder;
+
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+@Builder
+public record User(UUID id, String firstName, String lastName, String email, String city, String country,
+		ProfileStatus status, List<FragranceType> fragranceTypes, Set<FragranceCollection> fragranceCollections) {
+}
