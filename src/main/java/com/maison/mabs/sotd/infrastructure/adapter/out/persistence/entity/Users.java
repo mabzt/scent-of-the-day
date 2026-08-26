@@ -1,0 +1,45 @@
+package com.maison.mabs.sotd.infrastructure.adapter.out.persistence.entity;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Getter
+@Setter
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(name = "email_constraint", columnNames = "email") })
+public class Users extends BaseEntity {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
+
+	private String firstName;
+
+	private String lastName;
+
+	private String email;
+
+	private String city;
+
+	private String country;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<FragranceCollection> fragranceCollection = new ArrayList<>();
+
+}
