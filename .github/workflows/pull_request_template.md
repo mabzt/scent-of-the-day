@@ -10,7 +10,6 @@ Example:
 
 
 ## Type of Change
-Please delete options that are not relevant.
 
 - [ ] Bug fix
 - [ ] New feature
