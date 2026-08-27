@@ -10,7 +10,6 @@ import java.util.UUID;
 
 public interface UserPort {
 
-	// Create Profile
 	User createUserProfile(@Valid @NotNull CreateUserRequest createUserRequest);
 
 	User addCollection(@NotNull UUID id, @Valid @NotNull CollectionRequest collectionRequest);
