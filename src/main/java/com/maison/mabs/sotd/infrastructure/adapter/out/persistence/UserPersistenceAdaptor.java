@@ -2,6 +2,7 @@ package com.maison.mabs.sotd.infrastructure.adapter.out.persistence;
 
 import com.maison.mabs.sotd.application.port.out.UserJpaPort;
 import com.maison.mabs.sotd.domain.model.User;
+import com.maison.mabs.sotd.infrastructure.adapter.out.persistence.mapper.UserMapper;
 import com.maison.mabs.sotd.infrastructure.adapter.out.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,19 +16,23 @@ public class UserPersistenceAdaptor implements UserJpaPort {
 
 	private final UserRepository userRepository;
 
+	private final UserMapper userMapper;
+
 	@Override
 	public User save(User user) {
-		return null;
+		var userEntity = this.userMapper.toEntity(user);
+		var savedEntity = this.userRepository.save(userEntity);
+		return this.userMapper.toDomain(savedEntity);
 	}
 
 	@Override
 	public Optional<User> findUserByEmail(String email) {
-		return Optional.empty();
+		return this.userRepository.findByEmail(email).map(this.userMapper::toDomain);
 	}
 
 	@Override
 	public Optional<User> findUserById(UUID id) {
-		return Optional.empty();
+		return this.userRepository.findById(id).map(this.userMapper::toDomain);
 	}
 
 }
