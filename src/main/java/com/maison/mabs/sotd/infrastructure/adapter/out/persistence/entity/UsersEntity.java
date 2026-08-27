@@ -1,5 +1,6 @@
 package com.maison.mabs.sotd.infrastructure.adapter.out.persistence.entity;
 
+import com.maison.mabs.sotd.domain.model.ProfileStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(name = "email_constraint", columnNames = "email") })
-public class Users extends BaseEntity {
+public class UsersEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -39,7 +40,9 @@ public class Users extends BaseEntity {
 
 	private String country;
 
+	private ProfileStatus status;
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<FragranceCollection> fragranceCollection = new ArrayList<>();
+	private List<FragranceCollectionEntity> fragranceCollection = new ArrayList<>();
 
 }

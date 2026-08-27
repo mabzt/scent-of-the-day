@@ -7,15 +7,15 @@ import lombok.Builder;
 import java.util.UUID;
 
 @Builder
-public record CreateUserResponse(
+public record UserResponse(
 
 		@Schema(description = "Unique identifier of users") UUID id,
 
 		@Schema(description = "User first name", example = "John") String firstName,
 
-		@Schema(description = "User last name") String lastName,
+		@Schema(description = "User last name", example = "Cena") String lastName,
 
-		@Schema(description = "User email address", example = "john.doe@gmail.com") String email,
+		@Schema(description = "User email address", example = "john.cena@gmail.com") String email,
 
 		@Schema(description = "The city in which they reside", example = "Johannesburg") String city,
 
