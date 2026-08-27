@@ -25,7 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "fragrance_types")
-public class FragranceTypes extends BaseEntity {
+public class FragranceTypeEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -37,6 +37,6 @@ public class FragranceTypes extends BaseEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false, updatable = false,
 			foreignKey = @ForeignKey(name = "fk_fragrance_types_users"))
-	private Users users;
+	private UsersEntity usersEntity;
 
 }

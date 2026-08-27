@@ -6,6 +6,7 @@ import com.maison.mabs.sotd.infrastructure.adapter.out.persistence.mapper.UserMa
 import com.maison.mabs.sotd.infrastructure.adapter.out.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -26,11 +27,13 @@ public class UserPersistenceAdaptor implements UserJpaPort {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Optional<User> findUserByEmail(String email) {
 		return this.userRepository.findByEmail(email).map(this.userMapper::toDomain);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Optional<User> findUserById(UUID id) {
 		return this.userRepository.findById(id).map(this.userMapper::toDomain);
 	}

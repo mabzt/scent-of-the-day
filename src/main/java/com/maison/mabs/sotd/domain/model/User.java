@@ -4,10 +4,9 @@ import com.maison.mabs.sotd.infrastructure.adapter.in.dto.user.request.Fragrance
 import lombok.Builder;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
-@Builder
+@Builder(toBuilder = true)
 public record User(UUID id, String firstName, String lastName, String email, String city, String country,
-		ProfileStatus status, List<FragranceType> fragranceTypes, Set<FragranceCollection> fragranceCollections) {
+		ProfileStatus status, List<FragranceType> fragranceTypes, List<FragranceCollection> fragranceCollections) {
 }
