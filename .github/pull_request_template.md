@@ -20,13 +20,6 @@ Example:
 - [ ] Test improvement
 - [ ] CI/CD update
 
-## Related Issue / Ticket
-Reference any Jira/GitHub issue.
-
-Example:
-- JIRA-1234
-- Closes #45
-
 ## What Was Changed
 List the key implementation details.
 
@@ -46,6 +39,7 @@ Describe how this was tested.
 - [ ] Manual testing
 - [ ] Postman testing
 - [ ] Load/performance testing
+- [ ] Not applicable
 
 ### Test Evidence
 Add screenshots, logs, curl commands, or sample payloads if applicable.

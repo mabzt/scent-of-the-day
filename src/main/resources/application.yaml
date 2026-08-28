@@ -1,3 +1,7 @@
 spring:
   application:
     name: sotd
+  mvc:
+    apiversion:
+      use:
+        header: Api-Version
