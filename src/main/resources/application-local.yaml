@@ -2,6 +2,11 @@ spring:
   application:
     name: sotd
 
+  mvc:
+    apiversion:
+      use:
+        header: Api-Version
+
   datasource:
     primary:
       url: jdbc:postgresql://localhost:5432/users_db
