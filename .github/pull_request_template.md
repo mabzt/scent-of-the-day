@@ -39,6 +39,7 @@ Describe how this was tested.
 - [ ] Manual testing
 - [ ] Postman testing
 - [ ] Load/performance testing
+- [ ] Not applicable
 
 ### Test Evidence
 Add screenshots, logs, curl commands, or sample payloads if applicable.
