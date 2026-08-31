@@ -1,4 +1,4 @@
-package com.maison.mabs.sotd.infrastructure.adapter.out.client;
+package com.maison.mabs.sotd.infrastructure.adapter.out.client.openweather;
 
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.openweather.response.CurrentWeather;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.openweather.response.Location;
