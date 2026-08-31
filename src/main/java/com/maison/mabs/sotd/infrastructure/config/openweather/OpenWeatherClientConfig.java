@@ -16,17 +16,18 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @EnableConfigurationProperties(OpenWeatherConfigProperties.class)
 public class OpenWeatherClientConfig {
 
-    private final OpenWeatherConfigProperties configProperties;
+	private final OpenWeatherConfigProperties configProperties;
 
-    @Bean
-    public OpenWeatherClientApi openWeatherClientApi(RestClient.Builder builder) {
-        RestClient restClient = builder.baseUrl(this.configProperties.baseUrl())
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
+	@Bean
+	public OpenWeatherClientApi openWeatherClientApi(RestClient.Builder builder) {
+		RestClient restClient = builder.baseUrl(this.configProperties.baseUrl())
+			.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+			.build();
 
-        return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient))
-                .build()
-                .createClient(OpenWeatherClientApi.class);
+		return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient))
+			.build()
+			.createClient(OpenWeatherClientApi.class);
 
-    }
+	}
+
 }
