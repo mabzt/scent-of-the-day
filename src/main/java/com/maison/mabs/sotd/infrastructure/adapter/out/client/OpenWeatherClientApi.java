@@ -13,7 +13,7 @@ import java.util.List;
 public interface OpenWeatherClientApi {
 
 	@GetExchange("/geo/1.0/direct")
-	List<Location> getCodeCity(@RequestParam String q, @RequestParam int limit, @RequestParam String appid);
+	List<Location> geoCodeCity(@RequestParam String q, @RequestParam int limit, @RequestParam String appid);
 
 	@GetExchange("/data/2.5/weather")
 	CurrentWeather getCurrentWeather(@RequestParam BigDecimal lat, @RequestParam BigDecimal lon,
