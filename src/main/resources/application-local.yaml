@@ -2,6 +2,13 @@ spring:
   application:
     name: sotd
 
+  ai:
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY}
+      chat:
+        max-tokens: 4096
+        model: claude-sonnet-4-5
+
   mvc:
     apiversion:
       use:
