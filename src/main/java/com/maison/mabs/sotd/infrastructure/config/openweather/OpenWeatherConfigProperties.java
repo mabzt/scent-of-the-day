@@ -7,5 +7,6 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(prefix = "openweather")
-public record OpenWeatherConfigProperties(@NotNull boolean enabled, @NotEmpty String apiKey, @NotEmpty String baseUrl) {
+public record OpenWeatherConfigProperties(@NotNull boolean enabled, @NotEmpty String apiKey, @NotEmpty String baseUrl,
+		@NotNull int limit) {
 }

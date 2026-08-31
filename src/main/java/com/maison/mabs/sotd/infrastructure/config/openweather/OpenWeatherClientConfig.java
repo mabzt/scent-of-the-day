@@ -1,6 +1,6 @@
 package com.maison.mabs.sotd.infrastructure.config.openweather;
 
-import com.maison.mabs.sotd.infrastructure.adapter.out.client.OpenWeatherClientApi;
+import com.maison.mabs.sotd.infrastructure.adapter.out.client.openweather.OpenWeatherClientApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
