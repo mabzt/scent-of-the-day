@@ -59,3 +59,8 @@ spring:
 
       flyway:
         enabled: false
+
+openweather:
+  enabled: true
+  apiKey: ${OPENWEATHER_API_KEY}
+  baseUrl: https://api.openweathermap.org
