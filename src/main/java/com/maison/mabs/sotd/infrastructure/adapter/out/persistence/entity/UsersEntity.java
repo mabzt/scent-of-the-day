@@ -2,6 +2,7 @@ package com.maison.mabs.sotd.infrastructure.adapter.out.persistence.entity;
 
 import com.maison.mabs.sotd.domain.model.ProfileStatus;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,9 +37,8 @@ public class UsersEntity extends BaseEntity {
 
 	private String email;
 
-	private String city;
-
-	private String country;
+	@Embedded
+	private Location location;
 
 	private ProfileStatus status;
 
