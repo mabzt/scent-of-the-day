@@ -41,17 +41,17 @@ spring:
         max-lifetime: 1800000
         keepalive-time: 300000
 
-    jpa:
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
       hibernate:
-        ddl-auto: update
-      properties:
-        hibernate:
-          boot:
-            allow_jdbc_metadata_access: false
-          format_sql: true
-          use_sql_comments: true
-          default_batch_fetch_size: 10
+        boot:
+          allow_jdbc_metadata_access: false
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 10
 
     threads:
       virtual:
