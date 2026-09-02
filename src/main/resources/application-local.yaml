@@ -41,17 +41,17 @@ spring:
         max-lifetime: 1800000
         keepalive-time: 300000
 
-    jpa:
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
       hibernate:
-        ddl-auto: update
-      properties:
-        hibernate:
-          boot:
-            allow_jdbc_metadata_access: false
-          format_sql: true
-          use_sql_comments: true
-          default_batch_fetch_size: 10
+        boot:
+          allow_jdbc_metadata_access: false
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 10
 
     threads:
       virtual:
@@ -65,3 +65,34 @@ openweather:
   limit: 1
   apiKey: ${OPENWEATHER_API_KEY}
   baseUrl: https://api.openweathermap.org
+
+resilience4j:
+  retry:
+    instances:
+      generic-resilience:
+        max-attempts: 3
+        wait-duration:
+          seconds: 3
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.net.SocketTimeoutException
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    com:
+      maison:
+        mabs:
+          sotd:
+            infrastructure:
+              config:
+                logging: debug

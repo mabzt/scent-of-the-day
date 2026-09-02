@@ -2,7 +2,10 @@ package com.maison.mabs.sotd.infrastructure.adapter.out.persistence.entity;
 
 import com.maison.mabs.sotd.domain.model.ProfileStatus;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,10 +39,10 @@ public class UsersEntity extends BaseEntity {
 
 	private String email;
 
-	private String city;
+	@Embedded
+	private Location location;
 
-	private String country;
-
+	@Enumerated(EnumType.STRING)
 	private ProfileStatus status;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

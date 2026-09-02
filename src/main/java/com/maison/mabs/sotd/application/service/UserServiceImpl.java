@@ -1,12 +1,14 @@
 package com.maison.mabs.sotd.application.service;
 
 import com.maison.mabs.sotd.application.port.in.UserPort;
+import com.maison.mabs.sotd.application.port.out.OpenWeatherPort;
 import com.maison.mabs.sotd.application.port.out.UserJpaPort;
 import com.maison.mabs.sotd.domain.model.ProfileStatus;
 import com.maison.mabs.sotd.domain.model.User;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.user.request.CollectionRequest;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.user.request.CreateUserRequest;
-import com.maison.mabs.sotd.infrastructure.adapter.in.exception.SotdException;
+import com.maison.mabs.sotd.infrastructure.adapter.in.web.exception.SotdException;
+import com.maison.mabs.sotd.infrastructure.adapter.out.client.openweather.mapper.OpenWeatherMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,26 +27,34 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserPort {
 
+	private final OpenWeatherMapper openWeatherMapper;
+
+	private final OpenWeatherPort openWeatherPort;
+
 	private final UserJpaPort userJpaPort;
 
 	@Override
-	@Transactional
 	public User createUserProfile(CreateUserRequest createUserRequest) {
 		if (this.userJpaPort.findUserByEmail(createUserRequest.email()).isPresent()) {
 			log.warn("User with email: {} already exists", createUserRequest.email());
 			throw new SotdException("User with email already exists");
 		}
 
+		var location = this.openWeatherPort.getLocation(createUserRequest.city());
+		var userLocation = this.openWeatherMapper.mapGetLocationResponse(location)
+			.orElseThrow(() -> new SotdException("Failed to geo code city"));
+
 		var user = User.builder()
 			.firstName(createUserRequest.firstName())
 			.lastName(createUserRequest.lastName())
 			.email(createUserRequest.email())
-			.city(createUserRequest.city())
-			.country(createUserRequest.country())
 			.status(ProfileStatus.INCOMPLETE)
+			.location(userLocation)
+			.fragranceTypes(createUserRequest.fragranceTypes())
 			.build();
 
 		return this.userJpaPort.save(user);
+
 	}
 
 	@Override

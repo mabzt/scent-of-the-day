@@ -16,6 +16,6 @@ public interface UserMapper {
 	@Mapping(target = "updatedOn", ignore = true)
 	@Mapping(target = "createdBy", ignore = true)
 	@Mapping(target = "lastModifiedBy", ignore = true)
-	UsersEntity toEntity(com.maison.mabs.sotd.domain.model.User user);
+	UsersEntity toEntity(User user);
 
 }

@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Builder(toBuilder = true)
-public record User(UUID id, String firstName, String lastName, String email, String city, String country,
-		ProfileStatus status, List<FragranceType> fragranceTypes, List<FragranceCollection> fragranceCollections) {
+public record User(UUID id, String firstName, String lastName, String email, ProfileStatus status,
+		UserLocation location, List<FragranceType> fragranceTypes, List<FragranceCollection> fragranceCollections) {
 }
