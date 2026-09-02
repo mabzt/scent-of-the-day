@@ -1,0 +1,66 @@
+name: Coverage Badge
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-coverage-badge:
+    name: Update Coverage Badge
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    permissions:
+      contents: write
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: users_db_test
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Make mvnw executable
+        run: chmod +x ./mvnw
+
+      - name: Build and test
+        run: ./mvnw clean verify -Dspring.profiles.active=test
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/users_db_test
+          SPRING_DATASOURCE_USERNAME: test
+          SPRING_DATASOURCE_PASSWORD: test
+
+      - name: Generate coverage badge
+        id: jacoco
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          generate-branches-badge: true
+
+      - name: Commit updated badge
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          file_pattern: .github/badges/*.svg
+          commit_message: "docs: update coverage badge [skip ci]"
