@@ -15,3 +15,6 @@ Track the backlog and in-progress user stories on the
 
 [![Open Issues](https://img.shields.io/github/issues/mabzt/scent-of-the-day)](https://github.com/mabzt/scent-of-the-day/issues)
 ![Closed Issues](https://img.shields.io/github/issues-closed/mabzt/scent-of-the-day)
+
+
+[![Coverage](.github/badges/jacoco.svg)](https://github.com/mabzt/scent-of-the-day/actions)

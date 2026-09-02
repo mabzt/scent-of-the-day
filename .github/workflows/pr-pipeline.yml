@@ -46,30 +46,16 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Validate Maven wrapper
-        run: mvn --version
+      - name: Validate Maven
+        run: ./mvnw --version
 
-      # ── Stage 1: Compile ───────────────────────────────────────────────────
-      - name: Compile
-        run: mvn clean compile -q
-
-      # ── Stage 2: Unit tests ────────────────────────────────────────────────
-      - name: Run unit tests
-        run: mvn test -Dspring.profiles.active=test
-
-      # ── Stage 3: Integration tests ─────────────────────────────────────────
-      - name: Run integration tests
-        run: mvn verify -Dspring.profiles.active=test
+      - name: Build, test and package
+        run: ./mvnw clean verify -Dspring.profiles.active=test
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/users_db_test
           SPRING_DATASOURCE_USERNAME: test
           SPRING_DATASOURCE_PASSWORD: test
 
-      # ── Stage 4: Package ───────────────────────────────────────────────────
-      - name: Package
-        run: mvn package -DskipTests -q
-
-      # ── Stage 5: Upload artifact ───────────────────────────────────────────
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
@@ -77,7 +63,6 @@ jobs:
           path: target/*.jar
           retention-days: 7
 
-      # ── Stage 6: Test report ───────────────────────────────────────────────
       - name: Publish test results
         uses: dorny/test-reporter@v1
         if: always() && hashFiles('target/surefire-reports/*.xml') != ''
@@ -102,11 +87,5 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # ── Checkstyle ─────────────────────────────────────────────────────────
       - name: Run Checkstyle
-        run: mvn checkstyle:check -Dcheckstyle.config.location=/src/main/resources/checkstyle/checkstyle.xml
-
-#todo add spot bugs integration
-#      # ── SpotBugs ───────────────────────────────────────────────────────────
-#      - name: Run SpotBugs
-#        run: mvn spotbugs:check
+        run: ./mvnw checkstyle:check
