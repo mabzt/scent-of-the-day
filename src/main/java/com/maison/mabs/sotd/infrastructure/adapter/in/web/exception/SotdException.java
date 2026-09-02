@@ -1,4 +1,4 @@
-package com.maison.mabs.sotd.infrastructure.adapter.in.exception;
+package com.maison.mabs.sotd.infrastructure.adapter.in.web.exception;
 
 public class SotdException extends RuntimeException {
 

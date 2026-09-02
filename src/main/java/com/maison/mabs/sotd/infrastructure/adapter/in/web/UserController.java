@@ -1,4 +1,4 @@
-package com.maison.mabs.sotd.infrastructure.adapter.in.rest;
+package com.maison.mabs.sotd.infrastructure.adapter.in.web;
 
 import com.maison.mabs.sotd.application.port.in.UserPort;
 import com.maison.mabs.sotd.domain.model.User;
