@@ -24,7 +24,7 @@ jobs:
       postgres:
         image: postgres:17
         env:
-          POSTGRES_DB: user_db_test
+          POSTGRES_DB: users_db_test
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
         ports:
@@ -61,7 +61,7 @@ jobs:
       - name: Run integration tests
         run: mvn verify -Dspring.profiles.active=test
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/user_db_test
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/users_db_test
           SPRING_DATASOURCE_USERNAME: test
           SPRING_DATASOURCE_PASSWORD: test
 
@@ -73,7 +73,7 @@ jobs:
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
-          name: user-service-${{ github.sha }}
+          name: sotd-${{ github.sha }}
           path: target/*.jar
           retention-days: 7
 
