@@ -2,9 +2,11 @@ package com.maison.mabs.sotd.utils;
 
 import com.maison.mabs.sotd.domain.model.Concentration;
 import com.maison.mabs.sotd.domain.model.FragranceType;
+import com.maison.mabs.sotd.domain.model.Fragrances;
 import com.maison.mabs.sotd.domain.model.ProfileStatus;
 import com.maison.mabs.sotd.domain.model.User;
 import com.maison.mabs.sotd.domain.model.UserLocation;
+import com.maison.mabs.sotd.infrastructure.adapter.in.dto.user.request.CollectionRequest;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.user.request.CreateUserRequest;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.user.request.FragranceCollection;
 import lombok.experimental.UtilityClass;
@@ -24,8 +26,7 @@ public class UserTestDataUtil {
 			.email("kabza@piano.com")
 			.status(ProfileStatus.ACTIVE)
 			.location(validUserLocation())
-			.fragranceTypes(fragranceTypes())
-			.fragranceCollections(validFragranceCollection())
+			.fragrances(validFragrances())
 			.build();
 
 	}
@@ -65,6 +66,43 @@ public class UserTestDataUtil {
 					.concentration(Concentration.EXTRAIT)
 					.build(),
 				FragranceCollection.builder().brand("Xerjoff ").name("Naxos").concentration(Concentration.EDP).build());
+	}
+
+	public CollectionRequest collectionRequest() {
+		return CollectionRequest.builder().collection(addCollectionRequest()).build();
+	}
+
+	public List<FragranceCollection> addCollectionRequest() {
+		return List.of(
+				FragranceCollection.builder()
+					.brand("Tom Ford")
+					.name("Oud Wood")
+					.concentration(Concentration.EDP)
+					.build(),
+				FragranceCollection.builder()
+					.brand("Le Labo")
+					.name("Santal 33")
+					.concentration(Concentration.EDP)
+					.build(),
+				FragranceCollection.builder()
+					.brand("Byredo")
+					.name("Gypsy Water")
+					.concentration(Concentration.EDP)
+					.build(),
+				FragranceCollection.builder()
+					.brand("Guerlain")
+					.name("Habit Rouge")
+					.concentration(Concentration.EDT)
+					.build(),
+				FragranceCollection.builder()
+					.brand("Yves Saint Laurent")
+					.name("La Nuit de L'Homme")
+					.concentration(Concentration.EDT)
+					.build());
+	}
+
+	public Fragrances validFragrances() {
+		return Fragrances.builder().categories(fragranceTypes()).collection(validFragranceCollection()).build();
 	}
 
 }

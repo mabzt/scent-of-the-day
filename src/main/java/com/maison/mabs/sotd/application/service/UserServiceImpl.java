@@ -2,7 +2,8 @@ package com.maison.mabs.sotd.application.service;
 
 import com.maison.mabs.sotd.application.port.in.UserPort;
 import com.maison.mabs.sotd.application.port.out.OpenWeatherPort;
-import com.maison.mabs.sotd.application.port.out.UserJpaPort;
+import com.maison.mabs.sotd.application.port.out.UserStoragePort;
+import com.maison.mabs.sotd.domain.model.Fragrances;
 import com.maison.mabs.sotd.domain.model.ProfileStatus;
 import com.maison.mabs.sotd.domain.model.User;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.user.request.CollectionRequest;
@@ -12,7 +13,6 @@ import com.maison.mabs.sotd.infrastructure.adapter.out.client.openweather.mapper
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
@@ -31,11 +31,11 @@ public class UserServiceImpl implements UserPort {
 
 	private final OpenWeatherPort openWeatherPort;
 
-	private final UserJpaPort userJpaPort;
+	private final UserStoragePort userStoragePort;
 
 	@Override
 	public User createUserProfile(CreateUserRequest createUserRequest) {
-		if (this.userJpaPort.findUserByEmail(createUserRequest.email()).isPresent()) {
+		if (this.userStoragePort.findUserByEmail(createUserRequest.email()).isPresent()) {
 			log.warn("User with email: {} already exists", createUserRequest.email());
 			throw new SotdException("User with email already exists");
 		}
@@ -44,42 +44,34 @@ public class UserServiceImpl implements UserPort {
 		var userLocation = this.openWeatherMapper.mapGetLocationResponse(location)
 			.orElseThrow(() -> new SotdException("Failed to geo code city"));
 
+		Fragrances fragrances = Fragrances.builder().categories(createUserRequest.fragranceTypes()).build();
+
 		var user = User.builder()
 			.firstName(createUserRequest.firstName())
 			.lastName(createUserRequest.lastName())
 			.email(createUserRequest.email())
 			.status(ProfileStatus.INCOMPLETE)
 			.location(userLocation)
-			.fragranceTypes(createUserRequest.fragranceTypes())
+			.fragrances(fragrances)
 			.build();
 
-		return this.userJpaPort.save(user);
+		return this.userStoragePort.save(user);
 
 	}
 
 	@Override
-	@Transactional
 	public User addCollection(UUID id, CollectionRequest collectionRequest) {
-		// Todo: Relook this. Is updating of preferred fragrance types better suited as
-		// seperate service of will this
-		// suffice using a patch and only sending the data you need?
-		var user = this.userJpaPort.findUserById(id).orElseThrow(() -> new SotdException("User not found"));
+		var user = this.userStoragePort.findUserById(id).orElseThrow(() -> new SotdException("User not found"));
 
-		var userBuilder = user.toBuilder();
-		var updated = false;
-
-		if (Objects.nonNull(collectionRequest.collection())) {
-			userBuilder
-				.fragranceCollections(mergeDistinct(user.fragranceCollections(), collectionRequest.collection()));
-			updated = true;
+		if (Objects.isNull(collectionRequest.collection())) {
+			return user;
 		}
 
-		if (Objects.nonNull(collectionRequest.fragranceTypes())) {
-			userBuilder.fragranceTypes(mergeDistinct(user.fragranceTypes(), collectionRequest.fragranceTypes()));
-			updated = true;
-		}
+		var mergedCollection = Objects.nonNull(collectionRequest.collection())
+				? mergeDistinct(user.fragrances().collection(), collectionRequest.collection())
+				: user.fragrances().collection();
 
-		return updated ? this.userJpaPort.save(userBuilder.build()) : user;
+		return this.userStoragePort.updateCollection(id, mergedCollection);
 
 	}
 
