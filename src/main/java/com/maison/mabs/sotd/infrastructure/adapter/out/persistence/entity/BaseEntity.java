@@ -1,9 +1,9 @@
 package com.maison.mabs.sotd.infrastructure.adapter.out.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -20,6 +20,9 @@ import java.time.Instant;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
+	@Version
+	private Long version;
+
 	@JsonIgnore
 	@CreatedDate
 	private Instant createdOn;
@@ -30,12 +33,10 @@ public class BaseEntity {
 
 	@CreatedBy
 	@JsonIgnore
-	@Column
 	private String createdBy;
 
 	@JsonIgnore
 	@LastModifiedBy
-	@Column
 	private String lastModifiedBy;
 
 }
