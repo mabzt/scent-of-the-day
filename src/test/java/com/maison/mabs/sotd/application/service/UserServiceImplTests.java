@@ -1,7 +1,7 @@
 package com.maison.mabs.sotd.application.service;
 
 import com.maison.mabs.sotd.application.port.out.OpenWeatherPort;
-import com.maison.mabs.sotd.application.port.out.UserJpaPort;
+import com.maison.mabs.sotd.application.port.out.UserStoragePort;
 import com.maison.mabs.sotd.domain.model.ProfileStatus;
 import com.maison.mabs.sotd.domain.model.User;
 import com.maison.mabs.sotd.infrastructure.adapter.in.web.exception.SotdException;
@@ -30,7 +30,7 @@ class UserServiceImplTests {
 	private OpenWeatherPort openWeatherPort;
 
 	@Mock
-	private UserJpaPort userJpaPort;
+	private UserStoragePort userStoragePort;
 
 	@InjectMocks
 	private UserServiceImpl userService;
@@ -41,17 +41,17 @@ class UserServiceImplTests {
 		var createUserRequest = UserTestDataUtil.validRequest();
 		var locations = List.of(LocationTestDataUtil.validLocation());
 
-		Mockito.when(this.userJpaPort.findUserByEmail(createUserRequest.email())).thenReturn(Optional.empty());
+		// When
+		Mockito.when(this.userStoragePort.findUserByEmail(createUserRequest.email())).thenReturn(Optional.empty());
 		Mockito.when(this.openWeatherPort.getLocation(createUserRequest.city())).thenReturn(locations);
 		Mockito.when(this.openWeatherMapper.mapGetLocationResponse(locations))
 			.thenReturn(Optional.of(UserTestDataUtil.validUserLocation()));
 
-		// When
+		// Then
 		this.userService.createUserProfile(createUserRequest);
 
-		// Then
 		var userCaptor = ArgumentCaptor.forClass(User.class);
-		Mockito.verify(this.userJpaPort).save(userCaptor.capture());
+		Mockito.verify(this.userStoragePort).save(userCaptor.capture());
 		Assertions.assertEquals(ProfileStatus.INCOMPLETE, userCaptor.getValue().status());
 
 	}
@@ -62,7 +62,7 @@ class UserServiceImplTests {
 		var createUserRequest = UserTestDataUtil.validRequest();
 
 		// When
-		Mockito.when(this.userJpaPort.findUserByEmail(createUserRequest.email()))
+		Mockito.when(this.userStoragePort.findUserByEmail(createUserRequest.email()))
 			.thenReturn(Optional.of(UserTestDataUtil.validUser()));
 
 		// Then
@@ -79,7 +79,7 @@ class UserServiceImplTests {
 		var createUserRequest = UserTestDataUtil.validRequest();
 
 		// When
-		Mockito.when(this.userJpaPort.findUserByEmail(createUserRequest.email())).thenReturn(Optional.empty());
+		Mockito.when(this.userStoragePort.findUserByEmail(createUserRequest.email())).thenReturn(Optional.empty());
 
 		// Then
 		var exception = Assertions.assertThrows(SotdException.class,
