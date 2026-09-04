@@ -44,7 +44,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     properties:
       hibernate:
         boot:
@@ -57,12 +57,14 @@ spring:
                          # for ReadWriteRoutingDataSource to re-evaluate primary/replica per
                          # transaction instead of reusing a connection across several.
 
-    threads:
-      virtual:
-        enabled: true
+  flyway:
+    enabled: true
+    locations:
+      - classpath:db/migrations
 
-      flyway:
-        enabled: false
+  threads:
+    virtual:
+      enabled: true
 
 openweather:
   enabled: true
