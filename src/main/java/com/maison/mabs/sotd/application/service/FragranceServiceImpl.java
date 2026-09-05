@@ -32,9 +32,11 @@ public class FragranceServiceImpl implements SotdPort {
 	public Recommendation recommendation(UUID id) {
 		var user = this.userStoragePort.findUserById(id).orElseThrow(() -> new SotdException("User not found"));
 
+		// Todo: Cache weather by location.city
 		var currentWeather = this.openWeatherPort.getCurrentWeather(user.location().longitude(),
 				user.location().latitude());
 
+		// Todo: Cache anthropic response
 		var userLocation = this.openWeatherMapper.mapCurrentWeatherResponse(user.location(), currentWeather);
 
 		var updatedUser = this.userStoragePort.updateLocation(id, userLocation);
