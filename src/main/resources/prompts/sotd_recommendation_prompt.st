@@ -6,6 +6,9 @@ User's collection:
 Current weather:
 {weather}
 
+Location:
+{longitude}, {latitude}
+
 Your task is to recommend exactly ONE fragrance from the user's collection that is best suited to the current weather.
 
 Consider:
