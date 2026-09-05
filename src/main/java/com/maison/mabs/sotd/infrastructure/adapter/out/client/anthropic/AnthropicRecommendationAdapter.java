@@ -29,12 +29,11 @@ public class AnthropicRecommendationAdapter implements AnthropicRecommendationPo
 	@Override
 	public Recommendation recommend(User user) {
 		var promptTemplate = new PromptTemplate(this.promptResource);
-		//Todo move to anthropicMapper
+		// Todo move to anthropicMapper
 		var prompt = promptTemplate
 			.create(Map.of("collection", this.anthropicMapper.formatCollection(user.fragrances().collection()),
-					"weather", this.anthropicMapper.mapWeatherAndLocation(user),
-					"longitude", user.location().longitude(),
-					"latitude", user.location().latitude()));
+					"weather", this.anthropicMapper.mapWeatherAndLocation(user), "longitude",
+					user.location().longitude(), "latitude", user.location().latitude()));
 
 		log.info("SOTD prompt \n{} ", prompt.getContents());
 		var response = this.chatClient.prompt(prompt).call().content();
