@@ -5,7 +5,8 @@ import lombok.Builder;
 
 import java.math.BigDecimal;
 
-@Builder
+@Builder(toBuilder = true)
 public record UserLocation(String city, String country, String province, @JsonIgnore BigDecimal latitude,
-		@JsonIgnore BigDecimal longitude) {
+		@JsonIgnore BigDecimal longitude, @JsonIgnore BigDecimal currentTemperature,
+		@JsonIgnore BigDecimal minimumTemperature, @JsonIgnore BigDecimal maximumTemperature) {
 }

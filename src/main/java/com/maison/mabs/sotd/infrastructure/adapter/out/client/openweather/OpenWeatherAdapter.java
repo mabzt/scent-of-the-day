@@ -36,11 +36,13 @@ public class OpenWeatherAdapter implements OpenWeatherPort {
 		return this.weatherClientApi.getCurrentWeather(latitude, longitude, this.configProperties.apiKey(), METRIC);
 	}
 
+	@SuppressWarnings("unused")
 	private List<Location> getLocationFallback(String city, Throwable throwable) {
 		log.warn("Failed to geo code city: {} with exception: [{}]", city, throwable.getMessage());
 		return null;
 	}
 
+	@SuppressWarnings("unused")
 	private CurrentWeather getCurrentWeatherFallback(BigDecimal longitude, @NonNull BigDecimal latitude,
 			Throwable throwable) {
 		log.warn("Failed to retrieve current weather at  longitude: {} latitude: {} with exception: [{}] ", longitude,

@@ -2,6 +2,7 @@ package com.maison.mabs.sotd.infrastructure.adapter.out.persistence;
 
 import com.maison.mabs.sotd.application.port.out.UserStoragePort;
 import com.maison.mabs.sotd.domain.model.User;
+import com.maison.mabs.sotd.domain.model.UserLocation;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.user.request.FragranceCollection;
 import com.maison.mabs.sotd.infrastructure.adapter.in.web.exception.SotdConflictException;
 import com.maison.mabs.sotd.infrastructure.adapter.in.web.exception.SotdException;
@@ -75,6 +76,14 @@ public class UserPersistenceAdaptor implements UserStoragePort {
 			throw new SotdConflictException("User collection was updated concurrently");
 		}
 
+		return this.userMapper.toDomain(userEntity);
+	}
+
+	@Override
+	@Transactional
+	public User updateLocation(UUID id, UserLocation userLocation) {
+		var userEntity = this.userRepository.findById(id).orElseThrow(() -> new SotdException("User not found"));
+		userEntity.setLocation(this.userMapper.toLocationEntity(userLocation));
 		return this.userMapper.toDomain(userEntity);
 	}
 
