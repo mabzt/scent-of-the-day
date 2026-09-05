@@ -1,6 +1,7 @@
 package com.maison.mabs.sotd.infrastructure.adapter.out.client.openweather.mapper;
 
 import com.maison.mabs.sotd.domain.model.UserLocation;
+import com.maison.mabs.sotd.infrastructure.adapter.in.dto.openweather.response.CurrentWeather;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.openweather.response.Location;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,22 @@ public class OpenWeatherMapper {
 		}
 
 		return Optional.of(mapUserLocation(locations.getFirst()));
+
+	}
+
+	public UserLocation mapCurrentWeatherResponse(UserLocation userLocation, CurrentWeather currentWeather) {
+
+		if (currentWeather == null || currentWeather.main() == null) {
+			return userLocation;
+		}
+
+		var weatherMain = currentWeather.main();
+
+		return userLocation.toBuilder()
+			.currentTemperature(weatherMain.temperature())
+			.minimumTemperature(weatherMain.minimumTemperature())
+			.maximumTemperature(weatherMain.maximumTemperature())
+			.build();
 
 	}
 

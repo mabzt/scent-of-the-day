@@ -165,7 +165,6 @@
 				<configuration>
 					<argLine>
 						@{argLine} -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar
-<!--						-javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar-->
 					</argLine>
 				</configuration>
 			</plugin>
@@ -232,7 +231,7 @@
 			<plugin>
 				<groupId>io.spring.javaformat</groupId>
 				<artifactId>spring-javaformat-maven-plugin</artifactId>
-				<version>0.0.47</version>
+				<version>0.0.48</version>
 				<executions>
 					<execution>
 						<goals>

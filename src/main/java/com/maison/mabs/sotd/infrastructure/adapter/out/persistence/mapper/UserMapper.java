@@ -1,8 +1,10 @@
 package com.maison.mabs.sotd.infrastructure.adapter.out.persistence.mapper;
 
 import com.maison.mabs.sotd.domain.model.User;
+import com.maison.mabs.sotd.domain.model.UserLocation;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.user.request.FragranceCollection;
 import com.maison.mabs.sotd.infrastructure.adapter.out.persistence.entity.FragranceCollectionEntity;
+import com.maison.mabs.sotd.infrastructure.adapter.out.persistence.entity.Location;
 import com.maison.mabs.sotd.infrastructure.adapter.out.persistence.entity.UsersEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -25,6 +27,8 @@ public interface UserMapper {
 	@Mapping(target = "fragranceTypes", source = "fragrances.categories")
 	@Mapping(target = "fragranceCollection", source = "fragrances.collection")
 	UsersEntity toEntity(User user);
+
+	Location toLocationEntity(UserLocation userLocation);
 
 	List<FragranceCollectionEntity> toFragranceCollectionEntities(List<FragranceCollection> collections);
 

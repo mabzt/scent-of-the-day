@@ -24,4 +24,10 @@ public class Location {
 	@Column(name = "longitude", precision = 9, scale = 6)
 	private BigDecimal longitude;
 
+	private BigDecimal currentTemperature;
+
+	private BigDecimal minimumTemperature;
+
+	private BigDecimal maximumTemperature;
+
 }
