@@ -11,16 +11,16 @@ import java.util.stream.Collectors;
 @Component
 public class AnthropicMapper {
 
-	public String mapWeatherPrompt(User user) {
-		var weatherDescription = "current weather at location:%s, minimum temperature:%s maximum temperature:%s";
+	public String mapWeatherAndLocation(User user) {
+		var weatherDescription = "current weather:%s, minimum temperature:%s maximum temperature:%s. location, latitude:%s longitude:%s";
 		var userLocation = user.location();
 		return String.format(weatherDescription, userLocation.currentTemperature(), userLocation.minimumTemperature(),
-				userLocation.maximumTemperature());
+				userLocation.maximumTemperature(), userLocation.latitude(), userLocation.latitude());
 	}
 
 	public String formatCollection(List<FragranceCollection> collections) {
 		return collections.stream()
-			.map(fragrance -> "%s %s (%s)".formatted(fragrance.brand(), fragrance.brand(), fragrance.concentration()))
+			.map(fragrance -> "%s %s (%s)".formatted(fragrance.brand(), fragrance.name(), fragrance.concentration()))
 			.collect(Collectors.joining(", "));
 	}
 
