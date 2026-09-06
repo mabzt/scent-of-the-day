@@ -5,6 +5,6 @@ import lombok.Builder;
 
 import java.util.List;
 
-@Builder
+@Builder(toBuilder = true)
 public record CollectionRequest(@Schema(description = "Add collection request") List<FragranceCollection> collection) {
 }
