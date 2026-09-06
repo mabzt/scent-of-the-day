@@ -21,7 +21,7 @@ public class FragranceController {
 
 	private final SotdPort sotdPort;
 
-	@PostMapping("/recommendation/{id}")
+	@PostMapping(value = "/recommendation/{id}", version = "1.0")
 	public ResponseEntity<Recommendation> sotdRecommendation(@PathVariable UUID id) {
 		return new ResponseEntity<>(this.sotdPort.recommendation(id), HttpStatus.OK);
 	}
