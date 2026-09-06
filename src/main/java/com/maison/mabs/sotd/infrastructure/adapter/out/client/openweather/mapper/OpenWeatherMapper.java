@@ -3,9 +3,12 @@ package com.maison.mabs.sotd.infrastructure.adapter.out.client.openweather.mappe
 import com.maison.mabs.sotd.domain.model.UserLocation;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.openweather.response.CurrentWeather;
 import com.maison.mabs.sotd.infrastructure.adapter.in.dto.openweather.response.Location;
+import com.maison.mabs.sotd.infrastructure.adapter.in.dto.openweather.response.WeatherMain;
+import com.maison.mabs.sotd.infrastructure.adapter.out.client.openweather.exception.OpenWeatherException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +38,10 @@ public class OpenWeatherMapper {
 
 		var weatherMain = currentWeather.main();
 
+		if (!isValidWeather(weatherMain)) {
+			throw new OpenWeatherException("Invalid weather response");
+		}
+
 		return userLocation.toBuilder()
 			.currentTemperature(weatherMain.temperature())
 			.minimumTemperature(weatherMain.minimumTemperature())
@@ -51,6 +58,15 @@ public class OpenWeatherMapper {
 			.province(location.province())
 			.country(location.country())
 			.build();
+	}
+
+	private boolean isValidWeather(WeatherMain weatherMain) {
+		return isNullOrZero(weatherMain.temperature()) || isNullOrZero(weatherMain.minimumTemperature())
+				|| isNullOrZero(weatherMain.maximumTemperature());
+	}
+
+	private boolean isNullOrZero(BigDecimal bigDecimal) {
+		return bigDecimal == null || bigDecimal.equals(BigDecimal.ZERO);
 	}
 
 }
