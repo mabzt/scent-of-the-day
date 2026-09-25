@@ -1,10 +1,56 @@
 # SCENT OF THE DAY 
-SOTD is a fragrance recommendation service built on Java 25, Springboot4, structured using Hexagonal(Ports and Adapters) architecture.
-Persistence runs PostgresSQL with a primary/replica setup, routing writes to the primary 
-and reads to the replica for horizontal scalling.
 
-The codebase keeps domain logic framework-free, isolating Postgres, JPA and web concerns 
-behind adapters at the hexagons edge.
+A fragrance recommendation platform built for fragrance enthusiasts, by enthusiasts.
+SOTD recommends what to wear today based on your collection and the weather, suggests
+layering combinations, and tells you when something on your wishlist goes on promotion.
+
+## Highlights
+
+- **Event-driven microservices**: three services, each owning its own PostgreSQL database,
+  communicating through Kafka rather than shared data or synchronous calls.
+- **Transactional outbox with Debezium CDC**: state changes and their events are committed
+  atomically, then streamed to Kafka, so no event is lost and none is published for a
+  rolled-back change.
+- **Hexagonal architecture**: domain logic is framework-free; Postgres, JPA, Kafka and web
+  concerns sit behind adapters at the hexagon's edge.
+- **Read scaling**: Fragrance Service routes read-only transactions to a PostgreSQL replica
+  and writes to the primary.
+- **AI-assisted recommendations**: Anthropic API, combined with live weather from OpenWeather,
+  cached per user per day in Redis.
+
+
+
+## Services
+
+### User Service
+Source of truth for users. Handles onboarding and stores each user's fragrance collection
+and wishlist, publishing changes as events for other services.
+
+### Fragrance Service
+- Recommends a scent of the day and layering combinations from the user's collection,
+  using the local weather and the Anthropic API.
+- Maintains the fragrance catalog from scraped promotion and release events.
+- Matches promotions against wishlists and requests notifications for interested users.
+- *(Planned)* Purchase assistant: suggests fragrances that fill gaps in a collection
+  within the user's budget.
+
+### Communication Service
+The messenger. Sends email and push notifications, and deliberately knows nothing about
+fragrances. Other services ask it to send a template to a user; it handles the rest.
+
+
+## Tech stack
+
+Java 25 · Spring Boot 4.x · PostgreSQL · Apache Kafka (Amazon MSK) · Debezium ·
+Redis · AWS (Cognito, API Gateway, Lambda, EventBridge Scheduler, SES, SNS Mobile Push) ·
+Testcontainers
+
+
+## Architecture
+
+See the detailed architecture documentation:
+
+Diagrams, event flows and design decisions: [Architecture Documentation](docs/ARCHITECTURE.md)
 
 
 ## Project Board
