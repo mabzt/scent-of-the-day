@@ -12,18 +12,25 @@ import java.util.List;
 @Builder
 public record CreateUserRequest(
 //@formatter:off
-        @NotEmpty(message = "First name is required") @Schema(description = "User first name",
-                example = "John") String firstName,
+		@NotEmpty(message = "First name is required")
+		@Schema(description = "User first name", example = "John")
+		String firstName,
 
-        @NotEmpty(message = "Last name is required") @Schema(description = "User last name") String lastName,
+		@NotEmpty(message = "Last name is required")
+		@Schema(description = "User last name")
+		String lastName,
 
-        @Email(message = "Invalid email address") @NotEmpty(message = "Email address is required") @Schema(
-                description = "User email address", example = "john.doe@gmail.com") String email,
+		@Email(message = "Invalid email address")
+		@NotEmpty(message = "Email address is required")
+		@Schema(description = "User email address", example = "john.doe@gmail.com")
+		String email,
 
-        @NotEmpty(message = "City is required") @Schema(description = "The city in which they reside",
-                example = "Johannesburg") String city,
+		@NotEmpty(message = "City is required")
+		@Schema(description = "The city in which they reside", example = "Johannesburg")
+		String city,
 
-        @NotNull(message = "Fragrance type cannot be null") @Schema(description = "Fragrance types", allowableValues = {
-                "NICHE", "DESIGNER", "DUPE" }) List<FragranceType> fragranceTypes) {
-    //@formatter:on
+		@NotNull(message = "Fragrance type cannot be null")
+		@Schema(description = "Fragrance types", allowableValues = {"NICHE", "DESIGNER", "DUPE" })
+		List<FragranceType> fragranceTypes) {
+	//@formatter:on
 }

@@ -13,11 +13,12 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    User toDomain(UserJpaEntity userJpaEntity);
+	User toDomain(UserJpaEntity userJpaEntity);
 
-    UserJpaEntity toEntity(User user);
+	UserJpaEntity toEntity(User user);
 
-    Location toLocationEntity(UserLocation userLocation);
+	Location toLocationEntity(UserLocation userLocation);
 
-    List<FragranceCollectionJpaEntity> toFragranceCollectionEntities(List<FragranceCollection> collections);
+	List<FragranceCollectionJpaEntity> toFragranceCollectionEntities(List<FragranceCollection> collections);
+
 }

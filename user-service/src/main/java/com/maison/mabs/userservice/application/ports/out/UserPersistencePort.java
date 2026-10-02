@@ -10,13 +10,14 @@ import java.util.UUID;
 
 public interface UserPersistencePort {
 
-    User save(User user);
+	User save(User user);
 
-    Optional<User> findUserByEmail(String email);
+	Optional<User> findUserByEmail(String email);
 
-    Optional<User> findUserById(UUID id);
+	Optional<User> findUserById(UUID id);
 
-    User updateCollection(UUID id, List<FragranceCollection> fragranceCollections);
+	User updateCollection(UUID id, List<FragranceCollection> fragranceCollections);
 
-    User updateLocation(UUID id, UserLocation userLocation);
+	User updateLocation(UUID id, UserLocation userLocation);
+
 }

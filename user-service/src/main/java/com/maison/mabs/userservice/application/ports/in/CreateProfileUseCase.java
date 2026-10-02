@@ -5,5 +5,6 @@ import com.maison.mabs.userservice.domain.model.dto.CreateUserRequest;
 
 public interface CreateProfileUseCase {
 
-    User createUserProfile(CreateUserRequest createUserRequest);
+	User createUserProfile(CreateUserRequest createUserRequest);
+
 }

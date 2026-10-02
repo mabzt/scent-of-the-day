@@ -2,13 +2,14 @@ package com.maison.mabs.userservice.application.ports.in;
 
 public interface UserUseCase {
 
-    void createUser();
+	void createUser();
 
-    void updateUser();
+	void updateUser();
 
-    void deleteUser();
+	void deleteUser();
 
-    void addCollection();
+	void addCollection();
 
-    void addWishlist();
+	void addWishlist();
+
 }

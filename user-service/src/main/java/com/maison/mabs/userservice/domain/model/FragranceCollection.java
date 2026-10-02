@@ -7,17 +7,17 @@ import lombok.Builder;
 
 @Builder
 public record FragranceCollection(
-        //@formatter:off
-        @NotEmpty(message = "Fragrance brand is required")
-        @Schema(description = "Fragrance brand", example = "Amouage")
-        String brand,
+//@formatter:off
+		@NotEmpty(message = "Fragrance brand is required")
+		@Schema(description = "Fragrance brand", example = "Amouage")
+		String brand,
 
-        @NotEmpty(message = "Fragrance name is required")
-        @Schema(description = "Fragrance name", example = "Decision")
-        String name,
+		@NotEmpty(message = "Fragrance name is required")
+		@Schema(description = "Fragrance name", example = "Decision")
+		String name,
 
-        @NotNull(message = "Fragrance concentration is required")
-        @Schema(description = "Fragrance concentration", allowableValues = {"EDT", "EDP", "EXTRAIT" })
-        Concentration concentration) {
-//@formatter:on
+		@NotNull(message = "Fragrance concentration is required")
+		@Schema(description = "Fragrance concentration", allowableValues = {"EDT", "EDP", "EXTRAIT" })
+		Concentration concentration) {
+	//@formatter:on
 }
