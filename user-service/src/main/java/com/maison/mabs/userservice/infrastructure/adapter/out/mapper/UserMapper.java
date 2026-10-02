@@ -7,10 +7,11 @@ import com.maison.mabs.userservice.infrastructure.adapter.out.persistence.entity
 import com.maison.mabs.userservice.infrastructure.adapter.out.persistence.entity.Location;
 import com.maison.mabs.userservice.infrastructure.adapter.out.persistence.entity.UserJpaEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
 
 	User toDomain(UserJpaEntity userJpaEntity);
