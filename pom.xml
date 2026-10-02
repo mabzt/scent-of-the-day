@@ -11,6 +11,7 @@
 	<groupId>com.maison.mabs</groupId>
 	<artifactId>sotd</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name/>
 
 	<properties>
@@ -22,6 +23,10 @@
 		<spring-cloud.version>2025.1.2</spring-cloud.version>
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 	</properties>
+
+	<modules>
+		<module>user-service</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>
@@ -280,7 +285,7 @@
 
 				</dependencies>
 				<configuration>
-					<configLocation>/src/main/resources/checkstyle/checkstyle.xml</configLocation>
+					<configLocation>/build/checkstyle/checkstyle.xml</configLocation>
 					<consoleOutput>true</consoleOutput>
 					<failOnViolation>true</failOnViolation>
 				</configuration>
@@ -294,13 +299,9 @@
 						<phase>validate</phase>
 						<inherited>true</inherited>
 						<configuration>
-							<configLocation>
-								${project.basedir}/src/main/resources/checkstyle/checkstyle.xml
-							</configLocation>
+							<configLocation>${maven.multiModuleProjectDirectory}/build/checkstyle/checkstyle.xml</configLocation>
 							<includeTestSourceDirectory>true</includeTestSourceDirectory>
-							<suppressionsLocation>
-								${project.basedir}/src/main/resources/checkstyle/suppressions.xml
-							</suppressionsLocation>
+							<suppressionsLocation>${maven.multiModuleProjectDirectory}/build/checkstyle/suppressions.xml</suppressionsLocation>
 						</configuration>
 					</execution>
 				</executions>

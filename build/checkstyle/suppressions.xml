@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <!-- Annotation-processor output (MapStruct impls etc.) -->
+    <suppress files="[\\/]target[\\/]generated-(test-)?sources[\\/]" checks=".*"/>
+
+    <!-- Relax Javadoc rules for all test sources -->
+    <suppress files="[\\/]src[\\/]test[\\/]" checks="Javadoc"/>
+
+    <!-- No package-info.java requirement -->
+    <suppress checks="JavadocPackage"/>
+</suppressions>
