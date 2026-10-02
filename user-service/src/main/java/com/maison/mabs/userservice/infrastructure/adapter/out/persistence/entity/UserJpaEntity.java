@@ -6,7 +6,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -46,8 +45,11 @@ public class UserJpaEntity extends BaseEntity {
 
 	private String email;
 
-	@Embedded
-	private Location location;
+	private String city;
+
+	private String country;
+
+	private String province;
 
 	@Enumerated(EnumType.STRING)
 	private ProfileStatus status;

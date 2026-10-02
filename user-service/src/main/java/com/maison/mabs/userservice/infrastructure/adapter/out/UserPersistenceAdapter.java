@@ -83,7 +83,9 @@ public class UserPersistenceAdapter implements UserPersistencePort {
 	@Override
 	public User updateLocation(UUID id, UserLocation userLocation) {
 		var userEntity = this.userRepository.findById(id).orElseThrow(() -> new UserException("User not found"));
-		userEntity.setLocation(this.userMapper.toLocationEntity(userLocation));
+		userEntity.setCity(userLocation.city());
+		userEntity.setProvince(userLocation.province());
+		userEntity.setCountry(userLocation.country());
 		return this.userMapper.toDomain(userEntity);
 	}
 
