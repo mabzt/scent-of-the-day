@@ -29,6 +29,10 @@ public record CreateUserRequest(
 		@Schema(description = "The city in which they reside", example = "Johannesburg")
 		String city,
 
+		@NotEmpty(message = "Province is required")
+		@Schema(description = "The province in which they reside", example = "Johannesburg")
+		String province,
+
 		@NotNull(message = "Fragrance type cannot be null")
 		@Schema(description = "Fragrance types", allowableValues = {"NICHE", "DESIGNER", "DUPE" })
 		List<FragranceType> fragranceTypes) {
