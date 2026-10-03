@@ -46,7 +46,6 @@ public class UserServiceImpl implements CreateProfileUseCase {
 			.build();
 
 		return this.userPersistencePort.save(user);
-
 	}
 
 }
